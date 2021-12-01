@@ -70,4 +70,17 @@ public class Player : MonoBehaviour
 
         return moveVector;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        Enemy enemy = other.GetComponent<Enemy>();
+        if (enemy)
+        {
+            enemy.OnCrush(this);
+        }
+    }
+
+    public void OnCrush(Enemy enemy)
+    {
+
+    }
 }

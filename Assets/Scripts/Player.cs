@@ -15,6 +15,15 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     Transform MainBGQuadTransform;
+
+    [SerializeField]
+    Transform FireTransform;
+
+    [SerializeField]
+    GameObject Bullet;
+
+    [SerializeField]
+    float BulletSpeed = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +56,7 @@ public class Player : MonoBehaviour
     Vector3 AdjustMoveVector(Vector3 moveVector)
     {
         Vector3 result = Vector3.zero;
-        Debug.Log(boxCollider.center);
+        
 
         result = boxCollider.transform.position + moveVector;
 
@@ -72,6 +81,7 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log("OnTriggerEnter Player");
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy)
         {
@@ -81,6 +91,13 @@ public class Player : MonoBehaviour
 
     public void OnCrush(Enemy enemy)
     {
+        //Debug.Log("OnCrush Enemy");
+    }
 
+    public void Fire()
+    {
+        GameObject go = Instantiate(Bullet);
+        Bullet bullet = go.GetComponent<Bullet>();
+        bullet.Fire(OwnerSide.Player, FireTransform.position, FireTransform.right, BulletSpeed);
     }
 }

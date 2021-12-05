@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &833069077276112051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8080527826553920052}
+  m_Layer: 9
+  m_Name: FirePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8080527826553920052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833069077276112051}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.715, y: -0.077, z: -0.53418964}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4654141494872653970}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1048952396138308660
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +40,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4654141494872653970}
   - component: {fileID: 1421552772175148849}
-  m_Layer: 0
+  - component: {fileID: 5716914493994138045}
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,6 +61,7 @@ Transform:
   m_Children:
   - {fileID: 9005394628701702934}
   - {fileID: 1480332287838560009}
+  - {fileID: 8080527826553920052}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,6 +79,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveVector: {x: 0, y: 0, z: 0}
   Speed: 0
+  boxCollider: {fileID: 0}
+  MainBGQuadTransform: {fileID: 0}
+  FireTransform: {fileID: 8080527826553920052}
+  Bullet: {fileID: 8648747458134711481, guid: 80b0cca5d3c61044491a65acacddfa00, type: 3}
+  BulletSpeed: 10
+--- !u!54 &5716914493994138045
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048952396138308660}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1322129706839127407
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1480332287838560009}
   - component: {fileID: 7992247754190800443}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322129706839127407}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0003244877, y: 0.10072893, z: -0.12463343}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4654141494872653970}
@@ -86,11 +139,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322129706839127407}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.61, y: 0.29, z: 1}
-  m_Center: {x: 0, y: -0.03, z: 0}
+  m_Size: {x: 1.61, y: 0.4539343, z: 1}
+  m_Center: {x: 0, y: -0.111967176, z: 0}
 --- !u!1001 &9004479158884997486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -101,6 +154,10 @@ PrefabInstance:
     - target: {fileID: 1510364872509504, guid: f805c7b2f982faf43833878e4f22ae2a, type: 3}
       propertyPath: m_Name
       value: StarSparrow1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1510364872509504, guid: f805c7b2f982faf43833878e4f22ae2a, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4433942057210488, guid: f805c7b2f982faf43833878e4f22ae2a, type: 3}
       propertyPath: m_RootOrder

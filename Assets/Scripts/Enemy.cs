@@ -27,11 +27,23 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float CurrentSpeed;
 
+    [SerializeField]
+    Transform FireTransform;
+
+    [SerializeField]
+    GameObject Bullet;
+
+    [SerializeField]
+    float BulletSpeed = 1;
+
     Vector3 CurrentVelocity;
 
     float MoveStartTime = 0.0f;
 
-    float BattleStarTime = 0.0f;
+    float LastBattelUpdateTime = 0.0f;
+
+    [SerializeField]
+    int FireRemainCount = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -93,10 +105,10 @@ public class Enemy : MonoBehaviour
 
         transform.position = Vector3.SmoothDamp(transform.position, TargetPosition, ref CurrentVelocity, distance / CurrentSpeed, MaxSpeed);
         
-        if (CurrentState == State.Disappear)
-        {
-            transform.Rotate(Vector3.right * Time.deltaTime * 45);
-        }
+        //if (CurrentState == State.Disappear)
+        //{
+        //    transform.Rotate(Vector3.right * Time.deltaTime * 45);
+        //}
 
     }
 
@@ -106,7 +118,7 @@ public class Enemy : MonoBehaviour
         if (CurrentState == State.Appear)
         {
             CurrentState = State.Battle;
-            BattleStarTime = Time.time;
+            LastBattelUpdateTime = Time.time;
         }
         else if (CurrentState == State.Disappear)
         {
@@ -135,14 +147,27 @@ public class Enemy : MonoBehaviour
 
     void UpdateBattel()
     {
-        if (Time.time - BattleStarTime > 3.0f)
+        if (Time.time - LastBattelUpdateTime > 1.0f)
         {
-            Disappear(new Vector3(-15.0f, transform.position.y, transform.position.z));
+
+            if(FireRemainCount > 0)
+            {
+                Fire();
+                FireRemainCount--;
+            }
+            else
+            {
+                Disappear(new Vector3(-15.0f, transform.position.y, transform.position.z));
+            }
+            
+
+            LastBattelUpdateTime = Time.time;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log("OnTriggerEnter Enemy");
         Player player = other.GetComponent<Player>();
         if (player)
         {
@@ -152,6 +177,13 @@ public class Enemy : MonoBehaviour
 
     public void OnCrush(Player player)
     {
+        //Debug.Log("OnCrush");
+    }
 
+    public void Fire()
+    {
+        GameObject go = Instantiate(Bullet);
+        Bullet bullet = go.GetComponent<Bullet>();
+        bullet.Fire(OwnerSide.Enemy, FireTransform.position, -FireTransform.right, BulletSpeed);
     }
 }

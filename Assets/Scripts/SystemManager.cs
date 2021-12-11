@@ -10,6 +10,82 @@ public class SystemManager : MonoBehaviour
     {
         get { return instance; }
     }
+    [SerializeField]
+    Player player;
+
+    public Player Hero
+    {
+        get 
+        {
+            if(!player)
+            {
+                Debug.LogError("Main Player is not setted!");
+            }
+
+            return player; 
+        }
+    }
+
+    GamePointAccumulator gamePointAccumulator = new GamePointAccumulator();
+
+    public GamePointAccumulator GamePointAccumulator
+    {
+        get { return gamePointAccumulator; }
+    }
+
+    [SerializeField]
+    EffectManager effectManager;
+
+    public EffectManager EffectManager
+    {
+        get { return effectManager; }
+    }
+
+    [SerializeField]
+    EnemyManager enemyManger;
+    public EnemyManager EnemyManager
+    {
+        get
+        {
+            return enemyManger;
+        }
+    }
+
+    [SerializeField]
+    BulletManager bulletManager;
+
+    public BulletManager BulletManager
+    {
+        get { return bulletManager; }
+    }
+     
+    PrefabCacheSystem enemyCacheSystem = new PrefabCacheSystem();
+    public PrefabCacheSystem EnemyCacheSystem
+    {
+        get
+        {
+            return enemyCacheSystem;
+        }
+    }
+
+    PrefabCacheSystem bullectCacheSystem = new PrefabCacheSystem();
+    public PrefabCacheSystem BulletCacheSystem
+    {
+        get
+        {
+            return bullectCacheSystem;
+        }
+    }
+
+    PrefabCacheSystem effectCacheSystem = new PrefabCacheSystem();
+    public PrefabCacheSystem EffectCacheSystem
+    {
+        get
+        {
+            return effectCacheSystem;
+        }
+    }
+
 
     private void Awake()
     {
@@ -21,24 +97,9 @@ public class SystemManager : MonoBehaviour
         }
 
         instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
     //
-    [SerializeField]
-    Player player;
 
-    public Player Hero
-    { 
-        get { return player; } 
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

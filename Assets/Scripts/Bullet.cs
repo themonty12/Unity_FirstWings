@@ -4,16 +4,10 @@ using UnityEngine;
 
 
 // 발사자 정보
-public enum OwnerSide : int
-{
-    Player = 0,
-    Enemy
-}
+
 public class Bullet : MonoBehaviour
 {
     const float LifeTime = 15.0f;
-
-    OwnerSide ownerSide = OwnerSide.Player;
 
     [SerializeField]
     Vector3 MoveDirection = Vector3.zero;
@@ -21,10 +15,21 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     float Speed = 0.0f;
 
-    bool NeedMove = false;
+    bool NeedMove = false; // 이동 플래그
 
-    bool Hited = false;
-    float Fired = 0.0f;
+    bool Hited = false; // 부딛혔는지 플래그
+    float FiredTime;
+
+    [SerializeField]
+    int Damage = 1;
+
+    Actor Owner;
+
+    public string FilePath
+    {
+        get;
+        set;
+    }
 
 
     // Start is called before the first frame update
@@ -53,15 +58,16 @@ public class Bullet : MonoBehaviour
         transform.position += moveVector;
     }
 
-    public void Fire(OwnerSide FireOwner, Vector3 firePosition, Vector3 direction, float speed)
+    public void Fire(Actor owner, Vector3 firePosition, Vector3 direction, float speed, int damage)
     {
-        ownerSide = FireOwner;
+        Owner = owner;
         transform.position = firePosition;
         MoveDirection = direction;
         Speed = speed;
+        Damage = damage;
 
         NeedMove = true;
-        Fired = Time.time;
+        FiredTime = Time.time;
 
     }
 
@@ -71,7 +77,11 @@ public class Bullet : MonoBehaviour
 
         if(Physics.Linecast(transform.position, transform.position + moveVector, out hitInfo))
         {
-            Debug.Log("Hit");
+            Actor actor = hitInfo.collider.GetComponentInParent<Actor>();
+            if (actor && actor.IsDead)
+            {
+                return moveVector;
+            }
             moveVector = hitInfo.point - transform.position;
             onBulletCollision(hitInfo.collider);
         }
@@ -87,30 +97,37 @@ public class Bullet : MonoBehaviour
             return;
         }
 
+        if (collider.gameObject.layer == LayerMask.NameToLayer("EnemyBullet")
+            || collider.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+        {
+            return;
+        }
+
+        Actor actor = collider.GetComponentInParent<Actor>();
+        if (actor && actor.IsDead)
+            return;
+
+        actor.OnBulletHited(actor, Damage);
+
+
+
         Collider myCollider = GetComponentInChildren<Collider>();
         myCollider.enabled = false;
 
         Hited = true;
         NeedMove = false;
+        //
+        GameObject go = SystemManager.Instance.EffectManager.GenerateEffect(0, transform.position);
+        go.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+        Disappear();
 
         
-
-        if(ownerSide == OwnerSide.Player)
-        {
-            Enemy enemy = collider.GetComponentInParent<Enemy>();
-            Debug.Log("OnBulletCollision collider = " + "Enemy");
-        }
-        else
-        {
-            Player player = collider.GetComponentInParent<Player>();
-            Debug.Log("OnBulletCollision collider = "  +"Player");
-
-        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OntriggerEnter" + other.name);
+        
         onBulletCollision(other);
     }
 
@@ -123,7 +140,7 @@ public class Bullet : MonoBehaviour
             Disappear();
             return true;
         }
-        else if(Time.time - Fired > LifeTime)
+        else if(Time.time - FiredTime > LifeTime)
         {
             Disappear();
             return true;

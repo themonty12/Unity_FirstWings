@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class EffectManager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject[] effectPrefabs;
+    public const int BulletDisappearFxIndex = 0;
+    public const int ActorDeadFxIndex = 1;
     // Start is called before the first frame update
-
     [SerializeField]
+    PrefabCacheData[] effectFiles;
+
+    Dictionary<string, GameObject> FileCache = new Dictionary<string, GameObject>();
+    
 
     void Start()
     {
-        
+        Prepare();
     }
 
     // Update is called once per frame
@@ -23,17 +26,60 @@ public class EffectManager : MonoBehaviour
 
     public GameObject GenerateEffect(int index, Vector3 position)
     {
-        if (index < 0 || index >= effectPrefabs.Length)
+        if (index < 0 || index >= effectFiles.Length)
         {
             Debug.LogError("GenerateEffect error! out of range! index = " + index);
             return null;
         }
 
+        string filePath = effectFiles[index].filePath;
+        GameObject go = SystemManager.Instance.EffectCacheSystem.Archive(filePath);
+        go.transform.position = position;
+
+        AutoCachableEffect effect = go.GetComponent<AutoCachableEffect>();
+        effect.FilePath = filePath;
         
-        GameObject go = Instantiate<GameObject>(effectPrefabs[index], position, Quaternion.identity);
 
         return go;
     }
 
-  
+    public GameObject Load(string resourcePath)
+    {
+        GameObject go = null;
+
+        if (FileCache.ContainsKey(resourcePath))
+        {
+            go = FileCache[resourcePath];
+        }
+        else
+        {
+            // 캐시에 없으므로 로드
+            go = Resources.Load<GameObject>(resourcePath);
+            if (!go)
+            {
+                Debug.LogError("Load error! path = " + resourcePath);
+                return null;
+            }
+            // 로드 후 캐시에 적재
+            FileCache.Add(resourcePath, go);
+        }
+        return go;
+    }
+
+    public void Prepare()
+    {
+        for (int i = 0; i < effectFiles.Length; i++)
+        {
+            GameObject go = Load(effectFiles[i].filePath);
+            SystemManager.Instance.EffectCacheSystem.GenerateCache(effectFiles[i].filePath, go, effectFiles[i].cacheCount);
+        }
+    }
+
+    public bool RemoveEffect(AutoCachableEffect effect)
+    {
+        SystemManager.Instance.EffectCacheSystem.Restore(effect.FilePath, effect.gameObject);
+        return true;
+    }
+    
+
 }

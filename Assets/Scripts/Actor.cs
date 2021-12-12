@@ -61,7 +61,7 @@ public class Actor : MonoBehaviour
         Debug.Log(name + " OnDead");
         isDead = true;
 
-        SystemManager.Instance.EffectManager.GenerateEffect(1, transform.position);
+        SystemManager.Instance.EffectManager.GenerateEffect(EffectManager.ActorDeadFxIndex, transform.position);
     }
 
     public virtual void OnBulletHited(Actor attacker, int damage)
@@ -76,7 +76,7 @@ public class Actor : MonoBehaviour
         DecreaseHP(attacker, damage);
     }
 
-    void DecreaseHP(Actor attacker, int value)
+    protected virtual void DecreaseHP(Actor attacker, int value)
     {
         if (isDead)
         {

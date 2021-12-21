@@ -45,10 +45,7 @@ public class SystemManager : MonoBehaviour
     EnemyManager enemyManger;
     public EnemyManager EnemyManager
     {
-        get
-        {
-            return enemyManger;
-        }
+        get { return enemyManger; }
     }
 
     [SerializeField]
@@ -57,6 +54,13 @@ public class SystemManager : MonoBehaviour
     public BulletManager BulletManager
     {
         get { return bulletManager; }
+    }
+
+    [SerializeField]
+    DamageManager damageManager;
+    public DamageManager DamageManager
+    {
+        get { return damageManager; }
     }
      
     PrefabCacheSystem enemyCacheSystem = new PrefabCacheSystem();
@@ -83,6 +87,15 @@ public class SystemManager : MonoBehaviour
         get
         {
             return effectCacheSystem;
+        }
+    }
+
+    PrefabCacheSystem damageCacheSystem = new PrefabCacheSystem();
+    public PrefabCacheSystem DamageCacheSystem
+    {
+        get
+        {
+            return damageCacheSystem;
         }
     }
 

@@ -107,7 +107,7 @@ public class Bullet : MonoBehaviour
         if (actor && actor.IsDead)
             return;
 
-        actor.OnBulletHited(actor, Damage);
+        actor.OnBulletHited(Owner, Damage, transform.position);
 
 
 

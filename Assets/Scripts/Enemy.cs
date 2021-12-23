@@ -37,7 +37,7 @@ public class Enemy : Actor
 
     float MoveStartTime = 0.0f;
 
-    float LastBattelUpdateTime = 0.0f;
+    float LastActionUpdateTime = 0.0f;
 
     [SerializeField]
     int FireRemainCount = 1;
@@ -50,6 +50,9 @@ public class Enemy : Actor
         get;
         set;
     }
+
+    Vector3 AppearPoint;    // 입장시 도착 위치
+    Vector3 DisappearPoint; // 퇴장시 목표 위지
     // Start is called before the first frame update
     void Start()
     {
@@ -62,8 +65,9 @@ public class Enemy : Actor
         switch (CurrentState)
         {
             case State.None:
-
+                break;
             case State.Ready:
+                UpdateReady();
                 break;
             case State.Dead:
                 break;
@@ -121,12 +125,28 @@ public class Enemy : Actor
         if (CurrentState == State.Appear)
         {
             CurrentState = State.Battle;
-            LastBattelUpdateTime = Time.time;
+            LastActionUpdateTime = Time.time;
         }
         else if (CurrentState == State.Disappear)
         {
             CurrentState = State.None;
         }
+    }
+
+    public void Reset(EnemyGenerateData data)
+    {
+        CurrentHP = MaxHP = data.MaxHP;             // CurrentHP까지 다시 입력
+        Damage = data.Damage;                       // 총알 데미지
+        crashDamage = data.CrashDamage;             // 충돌 데미지
+        BulletSpeed = data.BulletSpeed;             // 총알 스피드
+        FireRemainCount = data.FireRemainCount;     // 발사할 총알 개수
+        GamePoint = data.GamePoint;                 // 파괴시 얻을 점수
+
+        AppearPoint = data.AppearPoint;             // 입장시 도착 위치
+        DisappearPoint = data.DisappearPoint;       // 퇴장시 도착 위치
+
+        CurrentState = State.Ready;
+        LastActionUpdateTime = Time.time;
     }
 
     public void Appear(Vector3 targetPos)
@@ -148,9 +168,17 @@ public class Enemy : Actor
         MoveStartTime = 0.0f;
     }
 
+    void UpdateReady()
+    {
+        if (Time.time - LastActionUpdateTime > 1.0f)
+        {
+            Appear(AppearPoint);
+        }
+    }
+
     void UpdateBattel()
     {
-        if (Time.time - LastBattelUpdateTime > 1.0f)
+        if (Time.time - LastActionUpdateTime > 1.0f)
         {
 
             if(FireRemainCount > 0)
@@ -160,11 +188,11 @@ public class Enemy : Actor
             }
             else
             {
-                Disappear(new Vector3(-15.0f, transform.position.y, transform.position.z));
+                Disappear(DisappearPoint);
             }
-            
 
-            LastBattelUpdateTime = Time.time;
+
+            LastActionUpdateTime = Time.time;
         }
     }
 

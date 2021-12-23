@@ -91,12 +91,12 @@ public class Bullet : MonoBehaviour
 
     void onBulletCollision(Collider collider)
     {
-
+        //Debug.Log("onBulletCollision " + collider.gameObject.layer);
         if (Hited)
         {
             return;
         }
-
+        
         if (collider.gameObject.layer == LayerMask.NameToLayer("EnemyBullet")
             || collider.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
@@ -104,7 +104,8 @@ public class Bullet : MonoBehaviour
         }
 
         Actor actor = collider.GetComponentInParent<Actor>();
-        if (actor && actor.IsDead)
+        //Debug.Log("Hited Actor Layer = " + actor.gameObject.layer);
+        if (actor && actor.IsDead || actor.gameObject.layer == Owner.gameObject.layer)
             return;
 
         actor.OnBulletHited(Owner, Damage, transform.position);

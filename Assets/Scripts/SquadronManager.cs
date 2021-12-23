@@ -64,6 +64,7 @@ public class SquadronManager : MonoBehaviour
     void GenerateSquadron(SquadronData data)
     {
         Debug.Log("GenerateSquadron");
+        data.sqadron.GenerateAllData();
     }
 
     void AllSquadronGenerated()

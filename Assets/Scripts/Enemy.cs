@@ -130,6 +130,7 @@ public class Enemy : Actor
         else if (CurrentState == State.Disappear)
         {
             CurrentState = State.None;
+            SystemManager.Instance.EnemyManager.RemoveEnemy(this);
         }
     }
 

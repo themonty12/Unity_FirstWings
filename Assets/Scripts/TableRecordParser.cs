@@ -10,7 +10,7 @@ public class MarshalTableConstant
     public const int charBufferSize = 256;
 }
 
-public class TableRecordParser<MarshaltableConstant>
+public class TableRecordParser<TMarshalStruct>
 {
     public TMarshalStruct ParseRecordLine(string line)
     {

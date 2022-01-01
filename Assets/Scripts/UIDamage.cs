@@ -92,7 +92,7 @@ public class UIDamage : MonoBehaviour
                 if(newColor.a == 0)
                 {
                     damageState = DamageState.None;
-                    SystemManager.Instance.DamageManager.Remove(this);
+                    SystemManager.Instance.GetCurrentSceneMain<InGameSceneMain>().DamageManager.Remove(this);
                 }
                 break;
         }

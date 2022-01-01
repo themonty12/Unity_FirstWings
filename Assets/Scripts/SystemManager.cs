@@ -10,94 +10,6 @@ public class SystemManager : MonoBehaviour
     {
         get { return instance; }
     }
-    [SerializeField]
-    Player player;
-
-    public Player Hero
-    {
-        get 
-        {
-            if(!player)
-            {
-                Debug.LogError("Main Player is not setted!");
-            }
-
-            return player; 
-        }
-    }
-
-    GamePointAccumulator gamePointAccumulator = new GamePointAccumulator();
-
-    public GamePointAccumulator GamePointAccumulator
-    {
-        get { return gamePointAccumulator; }
-    }
-
-    [SerializeField]
-    EffectManager effectManager;
-
-    public EffectManager EffectManager
-    {
-        get { return effectManager; }
-    }
-
-    [SerializeField]
-    EnemyManager enemyManger;
-    public EnemyManager EnemyManager
-    {
-        get { return enemyManger; }
-    }
-
-    [SerializeField]
-    BulletManager bulletManager;
-
-    public BulletManager BulletManager
-    {
-        get { return bulletManager; }
-    }
-
-    [SerializeField]
-    DamageManager damageManager;
-    public DamageManager DamageManager
-    {
-        get { return damageManager; }
-    }    
-     
-    PrefabCacheSystem enemyCacheSystem = new PrefabCacheSystem();
-    public PrefabCacheSystem EnemyCacheSystem
-    {
-        get
-        {
-            return enemyCacheSystem;
-        }
-    }
-
-    PrefabCacheSystem bullectCacheSystem = new PrefabCacheSystem();
-    public PrefabCacheSystem BulletCacheSystem
-    {
-        get
-        {
-            return bullectCacheSystem;
-        }
-    }
-
-    PrefabCacheSystem effectCacheSystem = new PrefabCacheSystem();
-    public PrefabCacheSystem EffectCacheSystem
-    {
-        get
-        {
-            return effectCacheSystem;
-        }
-    }
-
-    PrefabCacheSystem damageCacheSystem = new PrefabCacheSystem();
-    public PrefabCacheSystem DamageCacheSystem
-    {
-        get
-        {
-            return damageCacheSystem;
-        }
-    }
 
     [SerializeField]
     EnemyTable enemyTable;
@@ -105,6 +17,14 @@ public class SystemManager : MonoBehaviour
     {
         get { return enemyTable; }
     }
+
+    BaseSceneMain currentSceneMain;
+
+    public BaseSceneMain CurrentSceneMain
+    {
+        set { currentSceneMain = value; }
+    }
+
 
 
     private void Awake()
@@ -121,5 +41,23 @@ public class SystemManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     //
+
+    private void Start()
+    {
+        BaseSceneMain baseSceneMain = GameObject.FindObjectOfType<BaseSceneMain>();
+        Debug.Log("OnSceneLoaded! baseSceneMain.name = " + baseSceneMain.name);
+        SystemManager.instance.currentSceneMain = baseSceneMain;
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    public T GetCurrentSceneMain<T>()
+        where T : BaseSceneMain
+    {
+        return currentSceneMain as T;
+    }
 
 }

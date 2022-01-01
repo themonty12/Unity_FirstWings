@@ -61,7 +61,7 @@ public class Actor : MonoBehaviour
         Debug.Log(name + " OnDead");
         isDead = true;
 
-        SystemManager.Instance.EffectManager.GenerateEffect(EffectManager.ActorDeadFxIndex, transform.position);
+        SystemManager.Instance.GetCurrentSceneMain<InGameSceneMain>().EffectManager.GenerateEffect(EffectManager.ActorDeadFxIndex, transform.position);
     }
 
     public virtual void OnBulletHited(Actor attacker, int damage, Vector3 hitPos)

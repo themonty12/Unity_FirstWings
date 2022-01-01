@@ -34,7 +34,7 @@ public class EnemyManager : MonoBehaviour
     public bool GenerateEnemy(SquadronMemberStruct data)
     {
         string FilePath = SystemManager.Instance.EnemyTable.GetEnemy(data.EnemyID).FilePath;
-        GameObject go = SystemManager.Instance.EnemyCacheSystem.Archive(FilePath);
+        GameObject go = SystemManager.Instance.GetCurrentSceneMain<InGameSceneMain>().EnemyCacheSystem.Archive(FilePath);
 
         go.transform.position = new Vector3(data.GeneratePointX, data.GeneratePointY, 0);
 
@@ -56,7 +56,7 @@ public class EnemyManager : MonoBehaviour
         }
 
         enemies.Remove(enemy);
-        SystemManager.Instance.EnemyCacheSystem.Restore(enemy.FilePath, enemy.gameObject);
+        SystemManager.Instance.GetCurrentSceneMain<InGameSceneMain>().EnemyCacheSystem.Restore(enemy.FilePath, enemy.gameObject);
 
         return true;
     }
@@ -66,7 +66,7 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < enemyFiles.Length; i++)
         {
             GameObject go = enemyFactory.Load(enemyFiles[i].filePath);
-            SystemManager.Instance.EnemyCacheSystem.GenerateCache(enemyFiles[i].filePath, go, enemyFiles[i].cacheCount);
+            SystemManager.Instance.GetCurrentSceneMain<InGameSceneMain>().EnemyCacheSystem.GenerateCache(enemyFiles[i].filePath, go, enemyFiles[i].cacheCount);
         }
     }
 }

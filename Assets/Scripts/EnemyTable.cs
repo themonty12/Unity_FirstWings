@@ -37,14 +37,14 @@ public class EnemyTable : TableLoader<EnemyStruct>
 
     protected override void AddData(EnemyStruct data)
     {
-        Debug.Log("data.index = " + data.index);
-        Debug.Log("data.FilePath = " + data.FilePath);
-        Debug.Log("data.MaxHP = " + data.MaxHP);
-        Debug.Log("data.Damage = " + data.Damage);
-        Debug.Log("data.CrashDamage = " + data.CrashDamage);
-        Debug.Log("data.BulletSpeed = " + data.BulletSpeed);
-        Debug.Log("data.FireRemainCount = " + data.FireRemainCount);
-        Debug.Log("data.GamePoint = " + data.GamePoint);
+        //Debug.Log("data.index = " + data.index);
+        //Debug.Log("data.FilePath = " + data.FilePath);
+        //Debug.Log("data.MaxHP = " + data.MaxHP);
+        //Debug.Log("data.Damage = " + data.Damage);
+        //Debug.Log("data.CrashDamage = " + data.CrashDamage);
+        //Debug.Log("data.BulletSpeed = " + data.BulletSpeed);
+        //Debug.Log("data.FireRemainCount = " + data.FireRemainCount);
+        //Debug.Log("data.GamePoint = " + data.GamePoint);
 
         tableDatas.Add(data.index, data);
 

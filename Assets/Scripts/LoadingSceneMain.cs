@@ -51,7 +51,8 @@ public class LoadingSceneMain : BaseSceneMain
 
     void GoToNextScene()
     {
-        SceneController.Instance.LoadScene(SceneNameContstants.InGame);
+        //SceneController.Instance.LoadScene(SceneNameContstants.InGame);
+        FWNetworkManager.singleton.StartHost();
         NextsceneCall = true;
     }
 

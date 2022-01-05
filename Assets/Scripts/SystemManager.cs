@@ -25,6 +25,13 @@ public class SystemManager : MonoBehaviour
         set { currentSceneMain = value; }
     }
 
+    [SerializeField]
+    NetworkConnectionInfo connectionInfo;
+    public NetworkConnectionInfo ConnectionInfo
+    {
+        get { return connectionInfo; }
+    }
+
 
 
     private void Awake()

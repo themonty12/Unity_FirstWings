@@ -196,6 +196,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTable: {fileID: 380454836}
+  connectionInfo:
+    Host: 0
+    IPAddress: 
+    Port: 0
 --- !u!4 &117967280
 Transform:
   m_ObjectHideFlags: 0
@@ -373,13 +377,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 217643193}
   m_TextComponent: {fileID: 189853937}
   m_Placeholder: {fileID: 1721094700}
-  m_ContentType: 0
+  m_ContentType: 3
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 2
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 2
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -1350,6 +1354,7 @@ GameObject:
   - component: {fileID: 1053556993}
   - component: {fileID: 1053556995}
   - component: {fileID: 1053556994}
+  - component: {fileID: 1053556996}
   m_Layer: 5
   m_Name: NetworkConfigPanel
   m_TagString: Untagged
@@ -1421,6 +1426,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053556992}
   m_CullTransparentMesh: 1
+--- !u!114 &1053556996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053556992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d3b28997b3a41408a72664ff87315c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IPAddressInputField: {fileID: 1211376566}
+  PortInputField: {fileID: 217643192}
 --- !u!1 &1198172387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,7 +1522,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1198172390}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1053556996}
+        m_TargetAssemblyTypeName: NetworkConfigPanel, Assembly-CSharp
+        m_MethodName: OnHostButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1198172390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1853,6 +1884,7 @@ GameObject:
   - component: {fileID: 1702152398}
   - component: {fileID: 1702152397}
   - component: {fileID: 1702152396}
+  - component: {fileID: 1702152400}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1944,6 +1976,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1702152400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702152395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3759f5f5cda28ae45a8f7294bb832b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1721094698
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,7 +2311,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1854542836}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1053556996}
+        m_TargetAssemblyTypeName: NetworkConfigPanel, Assembly-CSharp
+        m_MethodName: OnClientButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1854542836
 MonoBehaviour:
   m_ObjectHideFlags: 0
